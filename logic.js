@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     boxes.forEach(box => {
         box.style.backgroundColor = 'rgb(192, 192, 192)';
     });
-
     // Define images with their respective IDs and source paths
     fiximage();
     btimer();
@@ -16,10 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     pauseMenu.style.display = 'none';
     pauseButton.addEventListener('click', () => {
         pauseMenu.style.display = 'flex';
+        isPaused =true;
     });
 
     resumeButton.addEventListener('click', () => {
         pauseMenu.style.display = 'none';
+        isPaused = false;
     });
 
     resetButton.addEventListener('click', () => {
@@ -1130,15 +1131,15 @@ function fiximage(){
 
     const images = [
         { id: 'b101', src: 'RCanon.png' },
-        { id: 'b102', src: 'RRico.png' },
-        { id: 'b103', src: 'RTank.png' },
-        { id: 'b104', src: 'RSemi.png' },
-        { id: 'b105', src: 'RTitan.png' },
+        { id: 'b203', src: 'RRico.png' },
+        { id: 'b105', src: 'RTank.png' },
+        { id: 'b207', src: 'RSemi.png' },
+        { id: 'b108', src: 'RTitan.png' },
         { id: 'b801', src: 'BCanon.png' },
-        { id: 'b701', src: 'BRico.png' },
-        { id: 'b803', src: 'BTank.png' },
-        { id: 'b805', src: 'BSemi.png' },
-        { id: 'b702', src: 'BTitan.png' }
+        { id: 'b703', src: 'BRico.png' },
+        { id: 'b805', src: 'BTank.png' },
+        { id: 'b707', src: 'BSemi.png' },
+        { id: 'b808', src: 'BTitan.png' }
     ];
 
 
@@ -1158,7 +1159,8 @@ function fiximage(){
     });
 }
 
-let countdown; // Store the interval ID to clear the interval
+let countdown;
+let isPaused=false; // Store the interval ID to clear the interval
 
 function rtimer() {
     document.getElementById('tog').innerText = "Red's Turn";
@@ -1168,10 +1170,10 @@ function rtimer() {
     timerElement.textContent = timeLeft;
 
     countdown = setInterval(() => {
-        if (timeLeft > 0) {
+        if (timeLeft > 0 && !isPaused) {
             timeLeft--;
             timerElement.textContent = timeLeft;
-        } else {
+        } else if (timeLeft <= 0) {
             clearInterval(countdown);
             alert('BLUE wins');
             fiximage();
@@ -1188,10 +1190,10 @@ function btimer() {
     timerElement.textContent = timeLeft;
 
     countdown = setInterval(() => {
-        if (timeLeft > 0) {
+        if (timeLeft > 0 && !isPaused) {
             timeLeft--;
             timerElement.textContent = timeLeft;
-        } else {
+        } else if (timeLeft <= 0) {
             clearInterval(countdown);
             alert('RED wins');
             fiximage();
